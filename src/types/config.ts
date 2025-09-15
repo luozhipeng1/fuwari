@@ -77,6 +77,15 @@ export type LicenseConfig = {
 	url: string;
 };
 
+export type UmamiConfig = {
+	enable: boolean;
+	baseUrl: string;
+	websiteId: string;
+	timezone: string;
+	username: string;
+	password: string;
+};
+
 export type LIGHT_DARK_MODE =
 	| typeof LIGHT_MODE
 	| typeof DARK_MODE

@@ -4,6 +4,7 @@ import type {
 	NavBarConfig,
 	ProfileConfig,
 	SiteConfig,
+	UmamiConfig,
 } from "./types/config";
 import { LinkPreset } from "./types/config";
 
@@ -88,6 +89,17 @@ export const profileConfig: ProfileConfig = {
 	],
 };
 
+// 在 config.ts 中
+export const umamiConfig: UmamiConfig = {
+	enable: true,
+	baseUrl: "https://lzphy.top",
+	websiteId: "8dd154a4-2073-415e-830e-3a82444b6bb6",
+	timezone: "Asia/Shanghai",
+	// 如果需要认证
+	username: "admin",
+	password: "umami"
+};
+
 export const licenseConfig: LicenseConfig = {
 	enable: true,
 	name: "CC BY-NC-SA 4.0",
@@ -98,4 +110,12 @@ export const expressiveCodeConfig: ExpressiveCodeConfig = {
 	// Note: Some styles (such as background color) are being overridden, see the astro.config.mjs file.
 	// Please select a dark theme, as this blog theme currently only supports dark background color
 	theme: "github-dark",
+};
+
+export const statsConfig = {
+	viewsText: "浏览量",
+	visitsText: "访客",
+	loadingText: "统计加载中...",
+	unavailableText: "统计不可用。",
+	getStatsText: (pageViews: number, visits: number) => `${statsConfig.viewsText} ${pageViews} · ${statsConfig.visitsText} ${visits}`,
 };
