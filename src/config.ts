@@ -46,7 +46,12 @@ export const navBarConfig: NavBarConfig = {
 		LinkPreset.Archive,
 		LinkPreset.About,
 		{
-			name: "网盘",
+			name: "访客统计",
+			url: "https://cloud.umami.is/share/i6f3UwPY4n0w1LJa/pengxing.dpdns.org", // Internal links should not include the base path, as it is automatically added
+			external: true, // Show an external link icon and will open in a new tab
+		},
+		{
+			name: "网盘资源",
 			url: "https://docs.qq.com/aio/DYmZYVGpFVGxOS3NE", // Internal links should not include the base path, as it is automatically added
 			external: true, // Show an external link icon and will open in a new tab
 		},
@@ -88,21 +93,11 @@ export const profileConfig: ProfileConfig = {
 	],
 };
 
-// 在 config.ts 中
-// export const umamiConfig: UmamiConfig = {
-// 	enable: true,
-// 	baseUrl: "https://lzphy.top",
-// 	websiteId: "8dd154a4-2073-415e-830e-3a82444b6bb6",
-// 	timezone: "Asia/Shanghai",
-// 	// 如果需要认证
-// 	username: "admin",
-// 	password: "umami"
-// };
-
+// 在 config.ts 中配置 Umami 相关信息
 export const umamiConfig: UmamiConfig = {
 	enable: true,
 	baseUrl: "https://us.umami.is",
-	shareId: "eYz72FSPLYBsNoB2",
+	shareId: "i6f3UwPY4n0w1LJa",
 	timezone: "Asia/Shanghai",
 };
 
