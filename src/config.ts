@@ -102,7 +102,7 @@ export const profileConfig: ProfileConfig = {
 export const umamiConfig: UmamiConfig = {
 	enable: true,
 	baseUrl: "https://us.umami.is",
-	shareId: "IrVVYJ4qc2J3tc7s",
+	shareId: "eYz72FSPLYBsNoB2",
 	timezone: "Asia/Shanghai",
 };
 
