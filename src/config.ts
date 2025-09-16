@@ -33,10 +33,10 @@ export const siteConfig: SiteConfig = {
 	favicon: [
 		// Leave this array empty to use the default favicon
 		{
-		  src: '/favicon/icon.png',    // Path of the favicon, relative to the /public directory
-		  theme: 'light',              // (Optional) Either 'light' or 'dark', set only if you have different favicons for light and dark mode
-		  sizes: '32x32',              // (Optional) Size of the favicon, set only if you have favicons of different sizes
-		}
+			src: "/favicon/icon.png", // Path of the favicon, relative to the /public directory
+			theme: "light", // (Optional) Either 'light' or 'dark', set only if you have different favicons for light and dark mode
+			sizes: "32x32", // (Optional) Size of the favicon, set only if you have favicons of different sizes
+		},
 	],
 };
 
@@ -85,19 +85,25 @@ export const profileConfig: ProfileConfig = {
 			icon: "fa6-brands:staylinked",
 			url: "https://link3.cc/pyxh",
 		},
-		
 	],
 };
 
 // 在 config.ts 中
+// export const umamiConfig: UmamiConfig = {
+// 	enable: true,
+// 	baseUrl: "https://lzphy.top",
+// 	websiteId: "8dd154a4-2073-415e-830e-3a82444b6bb6",
+// 	timezone: "Asia/Shanghai",
+// 	// 如果需要认证
+// 	username: "admin",
+// 	password: "umami"
+// };
+
 export const umamiConfig: UmamiConfig = {
 	enable: true,
-	baseUrl: "https://lzphy.top",
-	websiteId: "8dd154a4-2073-415e-830e-3a82444b6bb6",
+	baseUrl: "https://us.umami.is",
+	shareId: "IrVVYJ4qc2J3tc7s",
 	timezone: "Asia/Shanghai",
-	// 如果需要认证
-	username: "admin",
-	password: "umami"
 };
 
 export const licenseConfig: LicenseConfig = {
@@ -117,5 +123,6 @@ export const statsConfig = {
 	visitsText: "访客",
 	loadingText: "统计加载中...",
 	unavailableText: "统计不可用。",
-	getStatsText: (pageViews: number, visits: number) => `${statsConfig.viewsText} ${pageViews} · ${statsConfig.visitsText} ${visits}`,
+	getStatsText: (pageViews: number, visits: number) =>
+		`${statsConfig.viewsText} ${pageViews} · ${statsConfig.visitsText} ${visits}`,
 };

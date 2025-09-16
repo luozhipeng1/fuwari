@@ -82,9 +82,8 @@ const className = Astro.props.class;
             {!(tags && tags.length > 0) && <div class="transition text-50 text-sm font-medium">{i18n(I18nKey.noTags)}</div>}
         </div>
     </div>
-    <!-- 浏览量 -->
-     <!-- page views -->
-     {slug && (
+    <!-- page views -->
+    {slug && (
         <div class="flex items-center">
             <div class="meta-icon">
                 <Icon name="material-symbols:visibility-outline-rounded" class="text-xl"></Icon>
@@ -92,126 +91,65 @@ const className = Astro.props.class;
             <span class="text-50 text-sm font-medium" id="page-views-display">{statsConfig.loadingText}</span>
         </div>
     )}
-  </div>
-  {slug && (
-    <script define:vars={{ slug, published, umamiConfig, statsConfig }}>
-      // 将所有代码包装在一个立即执行的异步函数中
-      (async () => {
-        async function getValidToken() {
-          // 检查本地存储中是否有有效的token
-          const storedToken = localStorage.getItem('umami_token');
-          const tokenExpiry = localStorage.getItem('umami_token_expiry');
-          
-          // 如果token存在且未过期，则使用它
-          if (storedToken && tokenExpiry && Date.now() < parseInt(tokenExpiry)) {
-            return storedToken;
-          } else {
-            // 否则获取新的token
-            const authUrl = `${umamiConfig.baseUrl}/api/auth/login`;
-            const authRes = await fetch(authUrl, {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-              },
-              body: JSON.stringify({
-                username: umamiConfig.username,
-                password: umamiConfig.password
-              })
-            });
-  
-            if (!authRes.ok) throw new Error(`Authentication failed with status ${authRes.status}`);
-            
-            const authData = await authRes.json();
-            const token = authData.token;
-            
-            // 将token存储到localStorage，设置24小时有效期
-            localStorage.setItem('umami_token', token);
-            localStorage.setItem('umami_token_expiry', (Date.now() + 24 * 60 * 60 * 1000).toString());
-            
-            return token;
-          }
+</div>
+
+{slug && (
+    <script define:vars={{ slug, umamiConfig, unavailableText: statsConfig.unavailableText, viewsText: statsConfig.viewsText, visitsText: statsConfig.visitsText }}>
+        // 客户端统计文案生成函数
+        function generateStatsText(pageViews, visits) {
+            return `${viewsText} ${pageViews} · ${visitsText} ${visits}`;
         }
-  
-        async function fetchStatsData(token) {
-          // 取文章发布当天的 0 点（或者直接用 0 表示全部历史）
-          const pubDate = new Date(published);
-          const startAt = new Date(pubDate.getFullYear(), pubDate.getMonth(), pubDate.getDate()).getTime();
-          const endAt   = Date.now();
-  
-          // 构造「单篇文章」接口
-          const statsUrl = `${umamiConfig.baseUrl}/api/websites/${umamiConfig.websiteId}/pageviews?` +
-            new URLSearchParams({
-              startAt: startAt.toString(),
-              endAt:   endAt.toString(),
-              unit:    'hour',
-              timezone: umamiConfig.timezone || 'Asia/Shanghai',
-              url:     `/posts/${slug}/`   // 确保URL以斜杠结尾
-            });
-  
-          const res = await fetch(statsUrl, {
-            method: 'GET',
-            headers: {
-              'Authorization': `Bearer ${token}`,
-              'Accept': 'application/json'
+        
+        // 获取访问量统计
+        async function fetchPageViews(isRetry = false) {
+            if (!umamiConfig.enable) {
+                return;
             }
-          });
-  
-          // 如果是认证失败，可能是token过期，尝试重新获取
-          if (res.status === 401) {
-            const newToken = await getValidToken();
-            const retryRes = await fetch(statsUrl, {
-              method: 'GET',
-              headers: {
-                'Authorization': `Bearer ${newToken}`,
-                'Accept': 'application/json'
-              }
-            });
-            return retryRes;
-          }
-  
-          return res;
+            
+            try {
+                // 调用全局工具获取 Umami 分享数据
+                const { websiteId, token } = await getUmamiShareData(umamiConfig.baseUrl, umamiConfig.shareId);
+                
+                // 第二步：获取统计数据
+                const currentTimestamp = Date.now();
+                const statsUrl = `${umamiConfig.baseUrl}/api/websites/${websiteId}/stats?startAt=0&endAt=${currentTimestamp}&unit=hour&timezone=${encodeURIComponent(umamiConfig.timezone)}&url=%2Fposts%2F${slug}%2F&compare=false`;
+                
+                const statsResponse = await fetch(statsUrl, {
+                    headers: {
+                        'x-umami-share-token': token
+                    }
+                });
+                
+                if (!statsResponse.ok) {
+                    if (statsResponse.status === 401 && !isRetry) {
+                        clearUmamiShareCache();
+                        return fetchPageViews(true);
+                    }
+                    throw new Error('获取统计数据失败');
+                }
+                
+                const statsData = await statsResponse.json();
+                const pageViews = statsData.pageviews?.value || 0;
+                const visits = statsData.visits?.value || 0;
+                
+                const displayElement = document.getElementById('page-views-display');
+                if (displayElement) {
+                    displayElement.textContent = generateStatsText(pageViews, visits);
+                }
+            } catch (error) {
+                console.error('Error fetching page views:', error);
+                const displayElement = document.getElementById('page-views-display');
+                if (displayElement) {
+                    displayElement.textContent = unavailableText;
+                }
+            }
         }
-  
-        // 添加错误处理以避免端口关闭错误
-        try {
-          // 添加超时机制
-          const timeout = new Promise((_, reject) => 
-            setTimeout(() => reject(new Error('Request timeout')), 10000)
-          );
-          
-          const token = await Promise.race([
-            getValidToken(),
-            timeout
-          ]);
-          
-          const res = await Promise.race([
-            fetchStatsData(token),
-            timeout
-          ]);
-  
-          if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  
-          const json = await res.json();
-          console.log('Stats data:', json); // 调试信息
-          
-          // pageviews 接口返回的是数组，求和即可
-          const pageViews = json.pageviews?.reduce((s, item) => s + (item.y || 0), 0) || 0;
-          const visits    = json.sessions?.reduce((s, item) => s + (item.y || 0), 0)    || 0;
-  
-          // 确保元素存在后再更新内容
-          const displayElement = document.getElementById('page-views-display');
-          if (displayElement) {
-            displayElement.textContent = 
-              `${statsConfig.viewsText} ${pageViews} · ${statsConfig.visitsText} ${visits}`;
-          }
-        } catch (e) {
-          console.error('[pageviews] fail:', e);
-          const displayElement = document.getElementById('page-views-display');
-          if (displayElement) {
-            displayElement.textContent = statsConfig.unavailableText;
-          }
+
+        // 页面加载完成后获取统计数据
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', fetchPageViews);
+        } else {
+            fetchPageViews();
         }
-      })();
     </script>
-  )}
+)}

@@ -101,7 +101,7 @@ const bannerOffset =
 
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
-		
+		<script src="/js/umami-share.js" defer></script>
 		{favicons.map(favicon => (
 			<link rel="icon"
 				  href={favicon.src.startsWith('/') ? url(favicon.src) : favicon.src}
@@ -148,9 +148,9 @@ const bannerOffset =
 		<slot name="head"></slot>
 
 		<link rel="alternate" type="application/rss+xml" title={profileConfig.name} href={`${Astro.site}rss.xml`}/>
-		<script defer src="https://lzphy.top/random-string.js" data-website-id="8dd154a4-2073-415e-830e-3a82444b6bb6"></script>
-
-		<script defer src="https://cloud.umami.is/script.js" data-website-id="f11536ad-eac1-434b-a0c7-fc78faa63405"></script>
+		<!-- <script defer src="https://lzphy.top/random-string.js" data-website-id="8dd154a4-2073-415e-830e-3a82444b6bb6"></script> -->
+		<script defer src="https://cloud.umami.is/script.js" data-website-id="77083547-4c2e-4183-b842-520d9de3d82b"></script>
+		<!-- <script defer src="https://cloud.umami.is/script.js" data-website-id="f11536ad-eac1-434b-a0c7-fc78faa63405"></script> -->
 	</head>
 	<body class=" min-h-screen transition " class:list={[{"lg:is-home": isHomePage, "enable-banner": enableBanner}]}
 		  data-overlayscrollbars-initialize

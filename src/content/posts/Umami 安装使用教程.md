@@ -1,7 +1,7 @@
 ---
 title: Umami 安装使用教程
 published: 2025-09-16
-description: ''
+description: 'Umami 是一个简单、快速、注重隐私的 Google Analytics 替代品。'
 image: ''
 tags: [Blog,Umami]
 category: '笔记'

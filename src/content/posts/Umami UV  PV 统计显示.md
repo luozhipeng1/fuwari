@@ -1,7 +1,7 @@
 ---
 title: Umami UV / PV 统计显示 
 published: 2025-09-16
-description: ''
+description: '本文将介绍如何通过 Umami 的 API 获取网站的 UV 和 PV 数据，并在页面上展示。'
 image: ''
 tags: [Blog,Umami]
 category: '笔记'
