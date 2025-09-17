@@ -7,6 +7,7 @@ tags: [Blog,Umami]
 category: '笔记'
 draft: false 
 lang: ''
+pinned: false
 ---
 
 > Umami 官方文档并没有提供 UV 和 PV 展示的 API，但是我们可以通过 Umami 的访客 API 获取到网站的访问量和访问人数。

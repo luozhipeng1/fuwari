@@ -7,6 +7,7 @@ tags: [Blog,Umami]
 category: '笔记'
 draft: false 
 lang: ''
+pinned: false
 ---
 
 > Umami is a simple, fast, privacy-focused alternative to Google Analytics.
