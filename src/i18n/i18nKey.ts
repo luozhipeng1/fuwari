@@ -34,6 +34,8 @@ enum I18nKey {
 	license = "license",
 
 	pinned = "pinned",
+
+	series = "series",
 }
 
 export default I18nKey;

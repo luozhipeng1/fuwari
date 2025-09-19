@@ -37,4 +37,6 @@ export const ja: Translation = {
 	[Key.license]: "ライセンス",
 
 	[Key.pinned]: "ピン留め",
+
+	[Key.series]: "シリーズ",
 };

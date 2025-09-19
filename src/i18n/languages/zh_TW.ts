@@ -37,4 +37,6 @@ export const zh_TW: Translation = {
 	[Key.license]: "許可協議",
 
 	[Key.pinned]: "置頂",
+
+	[Key.series]: "系列",
 };

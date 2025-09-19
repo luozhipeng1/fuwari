@@ -48,6 +48,7 @@ export enum LinkPreset {
 	Home = 0,
 	Archive = 1,
 	About = 2,
+	Series = 4,
 }
 
 export type NavBarLink = {
@@ -110,10 +111,11 @@ export type BlogPostData = {
 	prevTitle?: string;
 	prevSlug?: string;
 	pinned?: boolean;
+	series?: string;
 	nextTitle?: string;
 	nextSlug?: string;
 };
 
 export type ExpressiveCodeConfig = {
-	theme: string;
+	theme: string | { light: string; dark: string };
 };

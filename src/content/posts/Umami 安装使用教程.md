@@ -8,13 +8,14 @@ category: '笔记'
 draft: false 
 lang: ''
 pinned: false
+series: 'Umami'
 ---
 
 > Umami is a simple, fast, privacy-focused alternative to Google Analytics.
 >
 > Umami 是一个简单、快速、注重隐私的 Google Analytics 替代品。
 
-![image-20250916112203340](../assets/images/image-20250916112203340.png)
+![image-20250916112203340](../_assets/images/image-20250916112203340.png)
 
 ##  1. 什么是 Umami，为什么要使用它？
 
@@ -101,7 +102,7 @@ docker-compose up -d
 Umami 启动后，默认用户名为 `admin`，默认密码为 `umami`。
 
 我们先修改密码，选择 `Setting` -> `Profile`，然后设置你的新密码。
-![img](../assets/images/v2-8e5d01834b102bd9acedb220fe8cc29f_1440w.webp)
+![img](../_assets/images/v2-8e5d01834b102bd9acedb220fe8cc29f_1440w.webp)
 
 修改密码
 
@@ -110,19 +111,19 @@ Umami 启动后，默认用户名为 `admin`，默认密码为 `umami`。
 ## 4. 添加网站
 
 点击 `设置` -> `网站` -> `添加网站`，输入你的网站地址，点击 `添加` 即可。
-![添加网站](../assets/images/v2-09b94e9c1d79acc10492e9954edd48f8_1440w.webp)
+![添加网站](../_assets/images/v2-09b94e9c1d79acc10492e9954edd48f8_1440w.webp)
 
 添加网站
 
 填写信息后，点击 `编辑`
-![编辑](../assets/images/v2-8c75210e16bdb9ac1ad31ce04ec6014d_1440w.webp)
+![编辑](../_assets/images/v2-8c75210e16bdb9ac1ad31ce04ec6014d_1440w.webp)
 
 编辑
 
 
 
 再点击 `跟踪代码`，复制代码到你的网站中即可。
-![跟踪代码](../assets/images/v2-9da304c3d1550731e064f3d9353b6296_1440w.webp)
+![跟踪代码](../_assets/images/v2-9da304c3d1550731e064f3d9353b6296_1440w.webp)
 
 跟踪代码
 

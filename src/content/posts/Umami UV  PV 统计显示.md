@@ -8,6 +8,7 @@ category: '笔记'
 draft: false 
 lang: ''
 pinned: false
+series: 'Umami'
 ---
 
 > Umami 官方文档并没有提供 UV 和 PV 展示的 API，但是我们可以通过 Umami 的访客 API 获取到网站的访问量和访问人数。
@@ -20,7 +21,7 @@ pinned: false
 
 https://us.umami.is/websites/f11536ad-eac1-434b-a0c7-fc78faa63405
 
-![image-20250916104118792](../assets/images/image-20250916104118792.png)
+![image-20250916104118792](../_assets/images/image-20250916104118792.png)
 
 我们在前文介绍过如何安装 Umami：[Umami 安装使用教程](https://blog.ovvv.top/posts/f7a090e6/)
 
@@ -30,7 +31,7 @@ https://us.umami.is/websites/f11536ad-eac1-434b-a0c7-fc78faa63405
 
 点击 `Settings` -> 点击 `Users` -> 点击 `Create user` -> 填写账号密码，`Role` 选择 `View only` -> 点击 `Save`
 
-![image-20250916104609380](../assets/images/image-20250916104609380.png)
+![image-20250916104609380](../_assets/images/image-20250916104609380.png)
 
 > 
 >
@@ -46,11 +47,11 @@ https://us.umami.is/websites/f11536ad-eac1-434b-a0c7-fc78faa63405
 
 `Teams` 中选择你刚创建的 Team 点击 `view` -> 复制 `Access code`，点击 `Websites`，点击 `Add website` 添加你想共享的网站。
 
-![image-20250916105721328](../assets/images/image-20250916105721328.png)
+![image-20250916105721328](../_assets/images/image-20250916105721328.png)
 
 如果你的网站之前属于个人账户，那么你可以将其转移到团队账户上。
 
-![image-20250916110027185](../assets/images/image-20250916110027185.png)
+![image-20250916110027185](../_assets/images/image-20250916110027185.png)
 
 换一个浏览器登录 Umami（使用 `View only` 权限的用户） -> `Settings` -> `Teams` -> `Join team` -> 输入 `Access code` -> `Join` -> 如果没有出错的话，点击 `Dashboard` 就可以看到你刚刚添加的网站了。
 
@@ -71,7 +72,7 @@ POST /api/auth/login
 
 如果成功，你应该会得到以下的结果：
 
-```JSON
+```json
 {
     "token": "39FFnY1og2MSPWg46alFZfS++akKpey37bRcp9D3oH6CsCMvaCbClN2Qbqq0QhUyZBD1FlHQ9UzUwYOS+J0JKSYnOR7SjftGEuCGj+QBY9RFHxJQBJtpZJmtBvodjgsY0ov8e3jLIClNsfyAecZ3RDXnarsZt+hZwRAFL+5WlOShQP1Bg6e6UyJuUD7f/NWfU94C0ZKYkAgg3b66ATWnkh23UuM3LP3EyYBiQXX3T2PmtN5gSFf7XkS0yRLOP4OCkKUn15j6KzGWHkFsWalwfIz3yECPdZgEWZyDtAnxB5i52N/+t9XIdiR2TDy1LpNj7h7D/dgfue6YO9U5akCauecGniXD7ZPdP1awPvXC/oOLl8TzQCuL+yM0JMN8",
     "user": {
@@ -90,18 +91,18 @@ POST /api/auth/login
 Authorization: Bearer 39FFnY1og2MSPWg46a...yM0JMN8
 ```
 
-![image-20250916110646498](../assets/images/image-20250916110646498.png)
+![image-20250916110646498](../_assets/images/image-20250916110646498.png)
 
 ## 4. 发送请求获取数据
 
 先分析一下官方文档的 API 接口：
 
-```API
+```apl
 # 获取网站所有数据汇总
 GET /api/websites/{websiteId}/stats
 ```
 
-![API](../assets/images/v2-3c570a96d2d263c81415fea5a97a94fd_1440w.webp)
+![API](../_assets/images/v2-3c570a96d2d263c81415fea5a97a94fd_1440w.webp)
 
 有两个必填的 查询参数：`startAt` 和 `endAt`，都是 Unix 毫秒时间戳，表示开始时间和结束时间
 
@@ -123,11 +124,11 @@ Authorization: Bearer 39FFnY1og2MSPWg46a...yM0JMN8
 
 在返回结果中找到 `createdAt` 字段，这个字段就是 `startAt` 的值，也就是你的网站创建时间，数据的开始时间
 
-![createdAt](../assets/images/v2-0f39fd39907c3d7bd911395ba890d82e_1440w.webp)
+![createdAt](../_assets/images/v2-0f39fd39907c3d7bd911395ba890d82e_1440w.webp)
 
 ##  5. 编写页面
 
-![页面展示](../assets/images/v2-c07238914da7b6773ee1d26f03ace7f0_1440w.webp)
+![页面展示](../_assets/images/v2-c07238914da7b6773ee1d26f03ace7f0_1440w.webp)
 
 ```html
 <!DOCTYPE html>

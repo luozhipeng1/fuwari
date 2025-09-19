@@ -37,4 +37,6 @@ export const en: Translation = {
 	[Key.license]: "License",
 
 	[Key.pinned]: "Pinned",
+
+	[Key.series]: "Series",
 };
