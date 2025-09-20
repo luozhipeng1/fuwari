@@ -45,9 +45,10 @@ export function applyThemeToDocument(theme: LIGHT_DARK_MODE) {
 	}
 
 	// Set the theme for Expressive Code
+	const isDarkMode = document.documentElement.classList.contains("dark");
 	document.documentElement.setAttribute(
 		"data-theme",
-		expressiveCodeConfig.theme,
+		expressiveCodeConfig.themes[Number(isDarkMode)],
 	);
 }
 

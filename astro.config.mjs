@@ -4,6 +4,7 @@ import tailwind from "@astrojs/tailwind";
 import { pluginCollapsibleSections } from "@expressive-code/plugin-collapsible-sections";
 import { pluginLineNumbers } from "@expressive-code/plugin-line-numbers";
 import swup from "@swup/astro";
+import { pluginFileIcons } from "@xt0rted/expressive-code-file-icons";
 import { defineConfig } from "astro/config";
 import expressiveCode from "astro-expressive-code";
 import icon from "astro-icon";
@@ -57,12 +58,16 @@ export default defineConfig({
 			},
 		}),
 		expressiveCode({
-			themes: [expressiveCodeConfig.theme, expressiveCodeConfig.theme],
+			themes: expressiveCodeConfig.themes, 
 			plugins: [
 				pluginCollapsibleSections(),
 				pluginLineNumbers(),
 				pluginLanguageBadge(),
 				pluginCustomCopyButton(),
+				pluginFileIcons({
+					iconClass: "text-4 w-5 inline mr-1 mb-1",
+					titleClass: "",
+				}),
 			],
 			defaultProps: {
 				wrap: true,
@@ -72,34 +77,34 @@ export default defineConfig({
 					},
 				},
 			},
-			styleOverrides: {
-				codeBackground: "var(--codeblock-bg)",
-				borderRadius: "0.75rem",
-				borderColor: "none",
-				codeFontSize: "0.875rem",
-				codeFontFamily:
-					"'JetBrains Mono Variable', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace",
-				codeLineHeight: "1.5rem",
-				frames: {
-					editorBackground: "var(--codeblock-bg)",
-					terminalBackground: "var(--codeblock-bg)",
-					terminalTitlebarBackground: "var(--codeblock-topbar-bg)",
-					editorTabBarBackground: "var(--codeblock-topbar-bg)",
-					editorActiveTabBackground: "none",
-					editorActiveTabIndicatorBottomColor: "var(--primary)",
-					editorActiveTabIndicatorTopColor: "none",
-					editorTabBarBorderBottomColor: "var(--codeblock-topbar-bg)",
-					terminalTitlebarBorderBottomColor: "none",
-				},
-				textMarkers: {
-					delHue: 0,
-					insHue: 180,
-					markHue: 250,
-				},
-			},
-			frames: {
-				showCopyToClipboardButton: false,
-			},
+			// styleOverrides: {
+			// 	codeBackground: "var(--codeblock-bg)",
+			// 	borderRadius: "0.75rem",
+			// 	borderColor: "none",
+			// 	codeFontSize: "0.875rem",
+			// 	codeFontFamily:
+			// 		"'JetBrains Mono Variable', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace",
+			// 	codeLineHeight: "1.5rem",
+			// 	frames: {
+			// 		editorBackground: "var(--codeblock-bg)",
+			// 		terminalBackground: "var(--codeblock-bg)",
+			// 		terminalTitlebarBackground: "var(--codeblock-topbar-bg)",
+			// 		editorTabBarBackground: "var(--codeblock-topbar-bg)",
+			// 		editorActiveTabBackground: "none",
+			// 		editorActiveTabIndicatorBottomColor: "var(--primary)",
+			// 		editorActiveTabIndicatorTopColor: "none",
+			// 		editorTabBarBorderBottomColor: "var(--codeblock-topbar-bg)",
+			// 		terminalTitlebarBorderBottomColor: "none",
+			// 	},
+			// 	textMarkers: {
+			// 		delHue: 0,
+			// 		insHue: 180,
+			// 		markHue: 250,
+			// 	},
+			// },
+			// frames: {
+			// 	showCopyToClipboardButton: false,
+			// },
 		}),
 		svelte(),
 		sitemap(),

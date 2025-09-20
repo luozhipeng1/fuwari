@@ -111,10 +111,7 @@ export const licenseConfig: LicenseConfig = {
 export const expressiveCodeConfig: ExpressiveCodeConfig = {
 	// Note: Some styles (such as background color) are being overridden, see the astro.config.mjs file.
 	// Please select a dark theme, as this blog theme currently only supports dark background color
-	theme: {
-		light: "github-light",
-		dark: "github-dark",
-	},
+	themes: ["github-light", "github-dark"], // Theme for light mode and dark mode respectively, visit https://expressive-code.github.io/docs/themes/ for all available themes
 };
 
 export const statsConfig = {
