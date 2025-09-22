@@ -1,6 +1,7 @@
 ---
 title: 在Fuwari中添加系列栏
 published: 2025-09-19
+updated: 2025-09-22
 description: ''
 image: ''
 tags: [Astro,Fuwari,博客]
@@ -23,6 +24,7 @@ series: '改造博客'
 ---
 title: 在Fuwari中添加系列栏
 published: 2025-09-19
+updated: 2025-09-22
 description: ''
 image: ''
 tags: []

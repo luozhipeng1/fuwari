@@ -24,6 +24,8 @@ import { GithubCardComponent } from "./src/plugins/rehype-component-github-card.
 import { parseDirectiveNode } from "./src/plugins/remark-directive-rehype.js";
 import { remarkExcerpt } from "./src/plugins/remark-excerpt.js";
 import { remarkReadingTime } from "./src/plugins/remark-reading-time.mjs";
+import { LinkCardComponent } from "./src/plugins/rehype-component-link-card.mjs";
+import rehypeExternalLinks from 'rehype-external-links';
 
 // https://astro.build/config
 export default defineConfig({
@@ -132,6 +134,7 @@ export default defineConfig({
 						important: (x, y) => AdmonitionComponent(x, y, "important"),
 						caution: (x, y) => AdmonitionComponent(x, y, "caution"),
 						warning: (x, y) => AdmonitionComponent(x, y, "warning"),
+						"link-card": LinkCardComponent,
 					},
 				},
 			],
@@ -158,6 +161,12 @@ export default defineConfig({
 					},
 				},
 			],
+			[
+				rehypeExternalLinks,
+				{
+				target: '_blank',
+				},
+			  ],
 		],
 	},
 	vite: {

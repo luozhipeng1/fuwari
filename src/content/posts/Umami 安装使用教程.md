@@ -1,6 +1,7 @@
 ---
 title: Umami 安装使用教程
 published: 2025-09-16
+updated: 2025-09-16
 description: 'Umami 是一个简单、快速、注重隐私的 Google Analytics 替代品。'
 image: ''
 tags: [Blog,Umami]
@@ -27,7 +28,7 @@ Umami 是一个简单、快速、注重隐私的开源分析解决方案，是 G
 
 **1Panel 或 宝塔 一键安装** 
 
-打开 `1Panel 或宝塔` 面板，点击 `应用商店`，搜索 `umami`，点击 `安装` 即可。 🛠
+打开 `1Panel 或宝塔` 面板，点击 `应用商店`，搜索 `umami`，点击 `安装` 即可。 
 
 🛠**从源码安装**
 
@@ -147,4 +148,7 @@ Umami 启动后，默认用户名为 `admin`，默认密码为 `umami`。
 
 ## 5. Umami UV / PV 统计显示
 
-Umami 官方文档并没有直接提供 UV 和 PV 展示的 API，但是我们可以通过编写相应的代码来获取 Umami 的访问量和访问人数。具体操作参考我的另一篇文章：Umami UV / PV 统计显示
+Umami 官方文档并没有直接提供 UV 和 PV 展示的 API，但是我们可以通过编写相应的代码来获取 Umami 的访问量和访问人数。具体操作参考我的另一篇文章：
+
+::link-card{url="https://pengxing.dpdns.org/posts/umami-uv--pv-%E7%BB%9F%E8%AE%A1%E6%98%BE%E7%A4%BA/" title="Umami UV / PV 统计显示" description="Umami 统计显示" icon="https://pengxing.dpdns.org/favicon/favicon.ico" image="https://pengxing.dpdns.org/_astro/image-20250916112203340.CqtaXT93_Z1Bppgg.webp" }
+

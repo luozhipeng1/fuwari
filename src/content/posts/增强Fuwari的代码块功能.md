@@ -1,14 +1,15 @@
 ---
 title: 增强Fuwari的代码块功能
 published: 2025-09-17
+updated: 2025-09-17
 description: ''
 image: ''
-tags: []
-category: ''
+tags: [Astro,Fuwari,博客]
+category: '前端'
 draft: false 
 lang: ''
 pinned: false
-series: ''
+series: '改造博客'
 ---
 
 > 使用现在最新的🍥Fuwari博客已经引入了`astro-expressive-code`包，不需要额外安装了，直接使用就完事了
