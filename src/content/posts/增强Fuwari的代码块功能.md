@@ -94,7 +94,7 @@ let l = 7;
 ## 折叠代码/代码行数
 
 ```js   collapse={8-13, 15-16} startLineNumber=7
-//{2,4-5}高亮 ins={3,7}新增 del={6}删除
+//collapse={8-13, 15-16} 折叠 startLineNumber=7
 console.log("Line 1");
 console.log("Line 2");
 let a = 1;
