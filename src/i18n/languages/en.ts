@@ -39,4 +39,6 @@ export const en: Translation = {
 	[Key.pinned]: "Pinned",
 
 	[Key.series]: "Series",
+
+	[Key.friends]: "Friends",
 };

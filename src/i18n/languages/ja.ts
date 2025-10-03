@@ -39,4 +39,6 @@ export const ja: Translation = {
 	[Key.pinned]: "ピン留め",
 
 	[Key.series]: "シリーズ",
+
+	[Key.friends]: "友達",
 };

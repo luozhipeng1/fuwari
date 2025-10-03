@@ -36,6 +36,8 @@ enum I18nKey {
 	pinned = "pinned",
 
 	series = "series",
+
+	friends = "friends",
 }
 
 export default I18nKey;

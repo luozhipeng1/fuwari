@@ -1,5 +1,6 @@
 ---
 import path from "node:path";
+import Giscus from "@components/misc/Giscus.astro";
 import License from "@components/misc/License.astro";
 import Markdown from "@components/misc/Markdown.astro";
 import I18nKey from "@i18n/i18nKey";
@@ -108,7 +109,14 @@ const jsonLd = {
             </Markdown>
 
             {licenseConfig.enable && <License title={entry.data.title} slug={entry.slug} pubDate={entry.data.published} class="mb-6 rounded-xl license-container onload-animation"></License>}
-
+            <!-- 评论模块 -->
+            <Giscus
+                repo="luozhipeng1/fuwari"
+                repoId="R_kgDOPvEVqw"
+                category="Announcements"
+                categoryId="DIC_kwDOPvEVq84CwMEH"
+            />
+            <br> 
         </div>
     </div>
 

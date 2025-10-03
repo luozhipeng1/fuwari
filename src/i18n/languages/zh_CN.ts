@@ -39,4 +39,6 @@ export const zh_CN: Translation = {
 	[Key.pinned]: "置顶",
 
 	[Key.series]: "系列",
+
+	[Key.friends]: "友链",
 };

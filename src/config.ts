@@ -46,6 +46,7 @@ export const navBarConfig: NavBarConfig = {
 		LinkPreset.Archive,
 		LinkPreset.Series,
 		LinkPreset.About,
+		LinkPreset.Friends,
 		{
 			name: "访客统计",
 			url: "https://cloud.umami.is/share/i6f3UwPY4n0w1LJa/pengxing.dpdns.org", // Internal links should not include the base path, as it is automatically added

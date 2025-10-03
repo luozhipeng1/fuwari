@@ -1,0 +1,101 @@
+---
+import { getEntry, render } from "astro:content";
+import Giscus from "@components/misc/Giscus.astro";
+import Markdown from "@components/misc/Markdown.astro";
+import I18nKey from "../i18n/i18nKey";
+import { i18n } from "../i18n/translation";
+import MainGridLayout from "../layouts/MainGridLayout.astro";
+
+const friendsPost = await getEntry("spec", "friends");
+
+if (!friendsPost) {
+	throw new Error("friends page content not found");
+}
+
+const { Content } = await friendsPost.render();
+
+const items = [
+	{
+		title: "鹏星导航",
+		imgurl: "https://px.lzphy.top/img/avatar.jpg",
+		desc: "爱你所爱，一切美好！",
+		siteurl: "https://px.lzphy.top",
+		tags: ["html,前端"],
+	},
+];
+---
+<MainGridLayout title={i18n(I18nKey.friends)} description={i18n(I18nKey.friends)}>
+    <div class="flex w-full rounded-[var(--radius-large)] overflow-hidden relative min-h-32">
+        <div class="card-base z-10 px-9 py-6 relative w-full ">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-8 my-4" id="friends-list">
+                {items.map((item) => (
+                  <div class="friend-card flex flex-nowrap items-stretch h-28 gap-4 rounded-[var(--radius-large)] hover:border-2 hover:border-blue-500 transition-all duration-300 ease-in-out cursor-pointer" data-url={item.siteurl}>
+                    <div class="w-28 h-28 flex-shrink-0 rounded-lg overflow-hidden bg-zinc-200 dark:bg-zinc-900">
+                      <img src={item.imgurl} alt="站点头像" class="w-full h-full object-cover" />
+                    </div>
+                    <div class="grow w-full">
+                      <div class="font-bold transition text-lg text-neutral-900 dark:text-neutral-100 mb-1">{item.title}</div>
+                      <div class="text-50 text-sm font-medium">{item.desc}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            <Markdown class="mt-2">
+                <Content />
+            </Markdown>
+
+            <!-- 评论模块 -->
+            <Giscus
+                repo="luozhipeng1/fuwari"
+                repoId="R_kgDOPvEVqw"
+                category="Announcements"
+                categoryId="DIC_kwDOPvEVq84CwMEH"
+            />
+            <br>
+        </div>
+    </div>
+ <!--在此处👇插入随机排列JS脚本 -->
+ <script>
+    window.addEventListener('DOMContentLoaded', () => {
+        const container = document.getElementById('friends-list');
+        if (!container) return;
+        const cards = Array.from(container.children);
+        // 洗牌算法
+        for (let i = cards.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [cards[i], cards[j]] = [cards[j], cards[i]];
+        }
+        // 重新插入
+        cards.forEach(card => container.appendChild(card));
+        
+        // 添加点击事件委托
+        container.addEventListener('click', (e) => {
+            if (e.target && e.target instanceof Element) {
+                const friendCard = e.target.closest('.friend-card');
+                if (friendCard) {
+                    const url = (friendCard as HTMLElement).dataset.url;
+                    if (url) {
+                        window.open(url, '_blank');
+                    }
+                }
+            }
+        });
+    });
+    </script>
+    <!--在此处👆插入随机排列JS脚本 -->
+                                
+    <style>
+       /* 定义一些变量 */
+:root {
+  --radius-large: 12px;
+}
+
+.friend-card:hover {
+  border: 2px solid #007bff; /* 鼠标悬停时显示蓝色边框 */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 添加阴影效果 */
+}
+.friend-card:hover .font-bold {
+  color: #007bff; /* 鼠标悬停时标题文字显示为蓝色 */
+}
+    </style>
+</MainGridLayout>
