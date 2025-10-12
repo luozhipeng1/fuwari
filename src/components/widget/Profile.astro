@@ -63,7 +63,7 @@ const config = profileConfig;
             
             // 第二步：获取全站统计数据（不指定url参数获取全站数据）
             const currentTimestamp = Date.now();
-            const statsUrl = `${umamiConfig.baseUrl}/api/websites/${websiteId}/stats?startAt=0&endAt=${currentTimestamp}&unit=hour&timezone=${encodeURIComponent(umamiConfig.timezone)}&compare=false`;
+            const statsUrl = `${umamiConfig.baseUrl}/analytics/us/api/websites/${websiteId}/stats?startAt=0&endAt=${currentTimestamp}&unit=hour&timezone=${encodeURIComponent(umamiConfig.timezone)}&compare=false`;
             
             const statsResponse = await fetch(statsUrl, {
                  headers: {
@@ -82,8 +82,8 @@ const config = profileConfig;
             }
             
             const statsData = await statsResponse.json();
-            const pageviews = statsData.pageviews?.value || 0;
-            const visitors = statsData.visits?.value || 0;
+            const pageviews = statsData.pageviews|| 0;
+            const visitors = statsData.visits || 0;
             
             const statsElement = document.getElementById('site-stats');
             if (statsElement) {

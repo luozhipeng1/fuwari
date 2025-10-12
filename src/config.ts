@@ -98,7 +98,7 @@ export const profileConfig: ProfileConfig = {
 // 在 config.ts 中配置 Umami 相关信息
 export const umamiConfig: UmamiConfig = {
 	enable: true,
-	baseUrl: "https://us.umami.is",
+	baseUrl: "https://cloud.umami.is",
 	shareId: "i6f3UwPY4n0w1LJa",
 	timezone: "Asia/Shanghai",
 };
