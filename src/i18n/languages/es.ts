@@ -39,4 +39,6 @@ export const es: Translation = {
 	[Key.series]: "Serie",
 
 	[Key.friends]: "Amigos",
+
+	[Key.donate]: "Donar",
 };

@@ -41,4 +41,6 @@ export const zh_TW: Translation = {
 	[Key.series]: "系列",
 
 	[Key.friends]: "友鏈",
+
+	[Key.donate]: "贊助",
 };

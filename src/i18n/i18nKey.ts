@@ -38,6 +38,8 @@ enum I18nKey {
 	series = "series",
 
 	friends = "friends",
+
+	donate = "donate",
 }
 
 export default I18nKey;

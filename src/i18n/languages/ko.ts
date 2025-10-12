@@ -39,4 +39,6 @@ export const ko: Translation = {
 	[Key.series]: "시리즈",
 
 	[Key.friends]: "친구",
+
+	[Key.donate]: "후원하기",
 };

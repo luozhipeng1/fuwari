@@ -41,4 +41,6 @@ export const zh_CN: Translation = {
 	[Key.series]: "系列",
 
 	[Key.friends]: "友链",
+
+	[Key.donate]: "赞助",
 };

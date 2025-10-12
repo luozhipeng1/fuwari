@@ -39,4 +39,6 @@ export const th: Translation = {
 	[Key.series]: "ชุด",
 
 	[Key.friends]: "เพื่อน",
+
+	[Key.donate]: "บริจาค",
 };

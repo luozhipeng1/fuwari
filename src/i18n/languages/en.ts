@@ -41,4 +41,6 @@ export const en: Translation = {
 	[Key.series]: "Series",
 
 	[Key.friends]: "Friends",
+
+	[Key.donate]: "Donate",
 };
