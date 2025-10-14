@@ -27,8 +27,4 @@ export const LinkPresets: { [key in LinkPreset]: NavBarLink } = {
 		name: i18n(I18nKey.donate),
 		url: "/donate/",
 	},
-	[LinkPreset.TvBox]: {
-		name: i18n(I18nKey.tvbox),
-		url: "/tvbox/",
-	},
 };

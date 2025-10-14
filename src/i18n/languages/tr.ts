@@ -43,6 +43,4 @@ export const tr: Translation = {
 	[Key.friends]: "Arkadaşlar",
 
 	[Key.donate]: "Bağış yap",
-
-	[Key.tvbox]: "TV Kutusu",
 };

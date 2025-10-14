@@ -43,6 +43,4 @@ export const vi: Translation = {
 	[Key.friends]: "Bạn bè",
 
 	[Key.donate]: "Ủng hộ",
-
-	[Key.tvbox]: "TV Box",
 };

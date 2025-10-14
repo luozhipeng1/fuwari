@@ -48,7 +48,6 @@ export const navBarConfig: NavBarConfig = {
 		LinkPreset.About,
 		LinkPreset.Friends,
 		LinkPreset.Donate,
-		LinkPreset.TvBox,
 		{
 			name: "其他", // Link text
 			url: "#", // Internal links should not include the base path, as it is automatically added

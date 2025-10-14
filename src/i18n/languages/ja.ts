@@ -43,6 +43,4 @@ export const ja: Translation = {
 	[Key.friends]: "友達",
 
 	[Key.donate]: "寄付",
-
-	[Key.tvbox]: "TVボックス",
 };
