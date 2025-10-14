@@ -36,9 +36,13 @@ export const th: Translation = {
 	[Key.publishedAt]: "เผยแพร่เมื่อ",
 	[Key.license]: "สัญญาอนุญาต",
 
+	[Key.pinned]: "ปักหมุด",
+
 	[Key.series]: "ชุด",
 
 	[Key.friends]: "เพื่อน",
 
 	[Key.donate]: "บริจาค",
+
+	[Key.tvbox]: "ทีวีบ็อกซ์",
 };

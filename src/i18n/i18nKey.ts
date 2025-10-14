@@ -40,6 +40,8 @@ enum I18nKey {
 	friends = "friends",
 
 	donate = "donate",
+
+	tvbox = "tvbox",
 }
 
 export default I18nKey;

@@ -48,15 +48,22 @@ export const navBarConfig: NavBarConfig = {
 		LinkPreset.About,
 		LinkPreset.Friends,
 		LinkPreset.Donate,
+		LinkPreset.TvBox,
 		{
-			name: "访客统计",
-			url: "https://cloud.umami.is/share/i6f3UwPY4n0w1LJa/pengxing.dpdns.org", // Internal links should not include the base path, as it is automatically added
-			external: true, // Show an external link icon and will open in a new tab
-		},
-		{
-			name: "网盘资源",
-			url: "https://docs.qq.com/aio/DYmZYVGpFVGxOS3NE", // Internal links should not include the base path, as it is automatically added
-			external: true, // Show an external link icon and will open in a new tab
+			name: "其他", // Link text
+			url: "#", // Internal links should not include the base path, as it is automatically added
+			children: [
+				{
+					name: "访客统计",
+					url: "https://cloud.umami.is/share/i6f3UwPY4n0w1LJa/pengxing.dpdns.org", // Internal links should not include the base path, as it is automatically added
+					external: true, // Show an external link icon and will open in a new tab
+				},
+				{
+					name: "网盘资源",
+					url: "https://docs.qq.com/aio/DYmZYVGpFVGxOS3NE", // Internal links should not include the base path, as it is automatically added
+					external: true, // Show an external link icon and will open in a new tab
+				},
+			],
 		},
 	],
 };

@@ -36,9 +36,13 @@ export const ko: Translation = {
 	[Key.publishedAt]: "게시일",
 	[Key.license]: "라이선스",
 
+	[Key.pinned]: "고정",
+
 	[Key.series]: "시리즈",
 
 	[Key.friends]: "친구",
 
 	[Key.donate]: "후원하기",
+
+	[Key.tvbox]: "TV 박스",
 };

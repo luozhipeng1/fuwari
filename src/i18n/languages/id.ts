@@ -30,13 +30,19 @@ export const id: Translation = {
 	[Key.darkMode]: "Gelap",
 	[Key.systemMode]: "Sistem",
 
-	[Key.more]: "Lainnya",
+	[Key.more]: "Selengkapnya",
 
 	[Key.author]: "Penulis",
 	[Key.publishedAt]: "Diterbitkan pada",
 	[Key.license]: "Lisensi",
 
+	[Key.pinned]: "Disematkan",
+
+	[Key.series]: "Seri",
+
 	[Key.friends]: "Teman",
 
 	[Key.donate]: "Donasi",
+
+	[Key.tvbox]: "Kotak TV",
 };

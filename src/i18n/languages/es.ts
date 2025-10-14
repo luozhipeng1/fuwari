@@ -36,9 +36,13 @@ export const es: Translation = {
 	[Key.publishedAt]: "Publicado el",
 	[Key.license]: "Licencia",
 
+	[Key.pinned]: "Fijado",
+
 	[Key.series]: "Serie",
 
 	[Key.friends]: "Amigos",
 
 	[Key.donate]: "Donar",
+
+	[Key.tvbox]: "TV Box",
 };

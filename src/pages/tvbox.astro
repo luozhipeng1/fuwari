@@ -1,0 +1,239 @@
+---
+import MainGridLayout from '@layouts/MainGridLayout.astro';
+---
+
+<MainGridLayout title="简易JSON编辑器">
+  <div class="max-w-5xl mx-auto p-4">
+    <h1 class="text-2xl font-bold mb-6">JSON可视化编辑器</h1>
+    
+    <!-- 工具栏 -->
+    <div class="flex flex-wrap gap-3 mb-6">
+      <button id="import-btn" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">
+        导入JSON文件
+      </button>
+      <button id="export-btn" class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors">
+        导出JSON文件
+      </button>
+      <button id="format-btn" class="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 transition-colors">
+        格式化JSON
+      </button>
+      <button id="clear-btn" class="px-4 py-2 bg-orange-500 text-white rounded-md hover:bg-orange-600 transition-colors">
+        清空内容
+      </button>
+      <input type="file" id="file-input" accept=".json" class="hidden">
+    </div>
+    
+    <!-- 编辑区域 -->
+    <div class="mb-6">
+      <label for="json-editor" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">JSON编辑区</label>
+      <textarea 
+        id="json-editor" 
+        class="w-full p-4 border border-gray-300 dark:border-gray-700 rounded-md dark:bg-gray-800 dark:text-white min-h-[300px] font-mono text-sm"
+        placeholder='{"key": "value"}'
+      ></textarea>
+    </div>
+    
+    <!-- 状态和错误信息 -->
+    <div id="status-message" class="mb-4 p-3 rounded-md hidden"></div>
+    
+    <!-- 可视化区域 -->
+    <div>
+      <h2 class="text-xl font-semibold mb-3">可视化预览</h2>
+      <div id="json-visualizer" class="p-4 bg-gray-50 dark:bg-gray-900 rounded-md overflow-x-auto"></div>
+    </div>
+  </div>
+
+  <script>
+    // 获取DOM元素
+    const jsonEditor = document.getElementById('json-editor');
+    const jsonVisualizer = document.getElementById('json-visualizer');
+    const importBtn = document.getElementById('import-btn');
+    const exportBtn = document.getElementById('export-btn');
+    const formatBtn = document.getElementById('format-btn');
+    const clearBtn = document.getElementById('clear-btn');
+    const fileInput = document.getElementById('file-input');
+    const statusMessage = document.getElementById('status-message');
+    
+    // 初始示例JSON
+    const initialJson = {
+      "name": "示例JSON",
+      "version": "1.0.0",
+      "enabled": true,
+      "settings": {
+        "theme": "dark",
+        "notifications": true
+      },
+      "items": ["第一项", "第二项", "第三项"]
+    };
+    
+    // 初始化编辑器
+    function initEditor() {
+      jsonEditor.value = JSON.stringify(initialJson, null, 2);
+      updateVisualization();
+    }
+    
+    // 更新可视化预览
+    function updateVisualization() {
+      try {
+        // 验证JSON
+        const json = JSON.parse(jsonEditor.value);
+        
+        // 显示成功状态
+        showStatus("JSON格式正确", "green");
+        
+        // 生成可视化HTML
+        jsonVisualizer.innerHTML = renderJson(json);
+      } catch (error) {
+        // 显示错误信息
+        showStatus(`JSON格式错误: ${error.message}`, "red");
+        jsonVisualizer.innerHTML = `<div class="text-red-500">请修复JSON格式错误</div>`;
+      }
+    }
+    
+    // 渲染JSON为可视化HTML
+    function renderJson(json, level = 0) {
+      const isObject = typeof json === 'object' && json !== null;
+      const isArray = Array.isArray(json);
+      const indent = '  '.repeat(level);
+      
+      if (!isObject) {
+        // 处理基本类型
+        const value = typeof json === 'string' ? `"${json}"` : 
+                      typeof json === 'boolean' ? `<span class="text-purple-600">${json}</span>` :
+                      json === null ? `<span class="text-orange-600">null</span>` :
+                      `<span class="text-blue-600">${json}</span>`;
+        return `${value}`;
+      }
+      
+      // 处理对象和数组
+      const items = [];
+      const entries = isArray ? json.map((value, index) => [index, value]) : Object.entries(json);
+      
+      entries.forEach(([key, value], index) => {
+        const isLast = index === entries.length - 1;
+        const keyHtml = isArray ? '' : `<span class="text-red-600">"${key}"</span>: `;
+        const valueHtml = renderJson(value, level + 1);
+        
+        items.push(`${indent}  ${keyHtml}${valueHtml}${!isLast ? ',' : ''}`);
+      });
+      
+      const braceType = isArray ? '[]' : '{}';
+      return `${braceType[0]}\n${items.join('\n')}\n${indent}${braceType[1]}`;
+    }
+    
+    // 显示状态消息
+    function showStatus(message, color) {
+      statusMessage.textContent = message;
+      statusMessage.className = `mb-4 p-3 rounded-md ${
+        color === 'green' ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100' :
+        'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-100'
+      }`;
+      
+      // 3秒后自动隐藏
+      setTimeout(() => {
+        statusMessage.className = 'mb-4 p-3 rounded-md hidden';
+      }, 3000);
+    }
+    
+    // 格式化JSON
+    function formatJson() {
+      try {
+        const json = JSON.parse(jsonEditor.value);
+        jsonEditor.value = JSON.stringify(json, null, 2);
+        updateVisualization();
+        showStatus("JSON已格式化", "green");
+      } catch (error) {
+        showStatus(`格式化失败: ${error.message}`, "red");
+      }
+    }
+    
+    // 导入JSON文件
+    function importJson() {
+      fileInput.click();
+    }
+    
+    // 处理文件导入
+    function handleFileImport(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        try {
+          // 验证JSON
+          const json = JSON.parse(e.target.result);
+          jsonEditor.value = JSON.stringify(json, null, 2);
+          updateVisualization();
+          showStatus(`已导入文件: ${file.name}`, "green");
+        } catch (error) {
+          showStatus(`导入失败: ${error.message}`, "red");
+        }
+        // 重置文件输入，允许重复选择同一文件
+        fileInput.value = '';
+      };
+      reader.readAsText(file);
+    }
+    
+    // 导出JSON文件
+    function exportJson() {
+      try {
+        const json = JSON.parse(jsonEditor.value);
+        const jsonStr = JSON.stringify(json, null, 2);
+        const blob = new Blob([jsonStr], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'edited-json.json';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        
+        showStatus("JSON已导出", "green");
+      } catch (error) {
+        showStatus(`导出失败: ${error.message}`, "red");
+      }
+    }
+    
+    // 清空内容
+    function clearContent() {
+      if (confirm("确定要清空所有内容吗？")) {
+        jsonEditor.value = '';
+        updateVisualization();
+        showStatus("内容已清空", "green");
+      }
+    }
+    
+    // 事件监听
+    jsonEditor.addEventListener('input', updateVisualization);
+    importBtn.addEventListener('click', importJson);
+    exportBtn.addEventListener('click', exportJson);
+    formatBtn.addEventListener('click', formatJson);
+    clearBtn.addEventListener('click', clearContent);
+    fileInput.addEventListener('change', handleFileImport);
+    
+    // 初始化
+    initEditor();
+  </script>
+
+  <style>
+    #json-visualizer {
+      font-family: monospace;
+      white-space: pre;
+      color: #333;
+      line-height: 1.5;
+    }
+    
+    #json-editor:focus {
+      outline: none;
+      ring: 2px solid #3b82f6;
+      border-color: #3b82f6;
+    }
+    
+    .text-red-600 { color: #dc2626; }
+    .text-blue-600 { color: #2563eb; }
+    .text-purple-600 { color: #9333ea; }
+    .text-orange-600 { color: #ea580c; }
+  </style>
+</MainGridLayout>
