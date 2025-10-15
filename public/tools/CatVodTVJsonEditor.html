@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 外部资源CDN按优先级排序 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.2.4/animate.min.css">
+    <link rel="stylesheet" href="./static/editor.css">
+    <title>猫影视TV配置编辑器</title>
+    
+    <!-- 关键样式：解决CSS加载延迟导致的闪烁问题 -->
+    <style>
+        /* 基础动画定义 */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* 页面初始状态：隐藏内容防止无样式闪烁 */
+        body > .container {
+            opacity: 0;
+            animation: fadeIn 0.5s ease-out forwards;
+            animation-delay: 0.2s; /* 轻微延迟确保样式加载 */
+        }
+        
+        /* 加载动画优化 */
+        .loading-overlay {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: #000;
+            opacity: 0.5;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.3s ease-out;
+        }
+
+        .loading-content {
+            color: #fff;
+            font-size: 1.2em;
+            animation: pulse 1.5s infinite;
+        }
+        
+        /* 加载中文字脉冲效果 */
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+        
+        /* 按钮悬停效果增强 */
+        .editor-btn {
+            transition: all 0.2s ease;
+        }
+
+        .editor-btn:hover {
+            transform: translateY(-1px);
+        }
+
+        /* 编辑器区域样式统一 */
+        .editor-form, .editor-textarea {
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        
+        /* 确保加载完成前内容完全隐藏 */
+        .loaded .loading-overlay {
+            opacity: 0;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+<!-- 加载动画 -->
+<div id="loading" class="loading-overlay">
+    <div class="loading-content">请稍候...</div>
+</div>
+
+<div class="container">
+    <div class="page-header">
+        <h3>
+            配置编辑器 &nbsp;<small>本地记录依赖浏览器缓存，清空缓存将丢失记录</small>
+        </h3>
+    </div>
+    <div class="row">
+        <div class="btn-group btn-group-sm col-md-5" role="group">
+            <!-- 按钮添加统一类名便于维护 -->
+            <button type="button" class="btn btn-success editor-btn" data-action="visual">可视</button>
+            <button type="button" class="btn btn-info editor-btn" data-action="code">源码</button>
+            <button type="button" class="btn btn-warning editor-btn" data-action="empty">清空</button>
+            <button type="button" class="btn btn-primary editor-btn" data-action="save">保存</button>
+        </div>
+    </div>
+    <h4></h4>
+    <!-- 表单与文本区域添加统一前缀类名 -->
+    <form id="diy_cfg_jf_999999" class="editor-form" style="display: none;"></form>
+    <textarea rows="30" class="form-control editor-textarea" id="diy_cfg_code_999999" style="margin-top: 10px; display: none;"></textarea>    
+</div>
+
+<!-- 脚本按依赖顺序加载，合并事件监听 -->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-notify@3.1.3/bootstrap-notify.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootbox@4.4.0/bootbox.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/underscore@1.13.1/underscore-min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-ui-dist@1.12.1/jquery-ui.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js"></script>
+
+<!-- 本地脚本 -->
+<script src="./static/index.js"></script>
+<script src="./static/jsonform.js"></script>
+<script src="./static/jsv.js"></script>
+<script src="./static/editor.js"></script>
+<script src="./static/jsonlint.js"></script>
+
+<!-- 统一事件处理 -->
+<script>
+// 页面加载完成后处理
+document.addEventListener('DOMContentLoaded', function() {
+    // 等待所有样式表加载完成
+    const styleSheets = document.styleSheets;
+    const loadCheckInterval = setInterval(() => {
+        // 检查所有样式表是否已加载
+        let allLoaded = true;
+        for (let i = 0; i < styleSheets.length; i++) {
+            try {
+                // 尝试访问cssRules会触发跨域错误，如果样式表未加载完成也会报错
+                if (styleSheets[i].cssRules === null) {
+                    allLoaded = false;
+                    break;
+                }
+            } catch (e) {
+                allLoaded = false;
+                break;
+            }
+        }
+
+        if (allLoaded) {
+            clearInterval(loadCheckInterval);
+            // 标记页面为已加载状态
+            document.body.classList.add('loaded');
+            // 延迟隐藏加载动画，确保过渡效果可见
+            setTimeout(() => {
+                document.getElementById('loading').style.display = 'none';
+            }, 300);
+        }
+    }, 50);
+
+    // 按钮事件委托，减少重复代码
+    $('.editor-btn').on('click', function() {
+        const action = $(this).data('action');
+        const id = '999999';
+        
+        switch(action) {
+            case 'visual':
+                show_visual(id);
+                // 添加切换动画
+                $('#diy_cfg_jf_999999').fadeIn(200);
+                $('#diy_cfg_code_999999').fadeOut(200);
+                break;
+            case 'code':
+                show_code(id);
+                // 添加切换动画
+                $('#diy_cfg_code_999999').fadeIn(200);
+                $('#diy_cfg_jf_999999').fadeOut(200);
+                break;
+            case 'empty':
+                empty_diy(id);
+                break;
+            case 'save':
+                save_diy(id);
+                break;
+        }
+    });
+});
+</script>
+</body>
+</html>

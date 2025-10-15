@@ -62,6 +62,11 @@ export const navBarConfig: NavBarConfig = {
 					url: "https://docs.qq.com/aio/DYmZYVGpFVGxOS3NE", // Internal links should not include the base path, as it is automatically added
 					external: true, // Show an external link icon and will open in a new tab
 				},
+				{
+					name: "TvBox编辑器",
+					url: "/tools/CatVodTVJsonEditor.html", // Internal links should not include the base path, as it is automatically added
+					external: false, // Show an external link icon and will open in a new tab
+				},
 			],
 		},
 	],
