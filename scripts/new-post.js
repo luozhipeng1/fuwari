@@ -3,13 +3,14 @@
 import fs from "node:fs";
 import path from "node:path";
 import readline from "node:readline";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 
 // 创建交互接口
 const rl = readline.createInterface({
 	input: process.stdin,
 	output: process.stdout,
 });
+
 function getDate() {
 	const today = new Date();
 	const year = today.getFullYear();
@@ -60,19 +61,19 @@ rl.question("是否需要为文章设置密码保护? (y/N) ", (needPassword) =>
 	if (needPassword.trim().toLowerCase() !== "y") {
 		// 不设置密码，直接创建文章
 		const content = `---
-  title: ${args[0]}
-  published: ${getDate()}
-  updated: ${getDate()}
-  description: ''
-  image: ''
-  tags: []
-  category: ''
-  draft: false 
-  lang: ''
-  pinned: false
-  series: ''
-  ---
-  `;
+title: ${args[0]}
+published: ${getDate()}
+updated: ${getDate()}
+description: ''
+image: ''
+tags: []
+category: ''
+draft: false 
+lang: ''
+pinned: false
+series: ''
+---
+`;
 
 		fs.writeFileSync(fullPath, content);
 		console.log(`Post ${fullPath} created (未加密)`);
@@ -102,6 +103,7 @@ lang: ''
 pinned: false
 series: ''
 password: '${hashedPassword}'
+encryptedScript: true
 ---
 `;
 					fs.writeFileSync(fullPath, content);

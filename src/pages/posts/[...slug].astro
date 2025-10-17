@@ -14,6 +14,9 @@ import ImageWrapper from "../../components/misc/ImageWrapper.astro";
 import PostMetadata from "../../components/PostMeta.astro";
 import { profileConfig, siteConfig } from "../../config";
 import { formatDateToYYYYMMDD } from "../../utils/date-utils";
+import PasswordProtection from '../../components/PasswordProtection.astro'
+import bcrypt from 'bcryptjs'
+import CryptoJS from 'crypto-js'
 
 export async function getStaticPaths() {
 	const blogEntries = await getSortedPosts();
@@ -27,6 +30,46 @@ const { entry } = Astro.props;
 const { Content, headings } = await entry.render();
 
 const { remarkPluginFrontmatter } = await entry.render();
+
+// 处理加密文章
+let encryptedData = null;
+// 检查文章是否有密码字段，如果有则视为加密文章
+if (entry.data.password) {
+  // 判断密码是明文还是bcrypt哈希值
+  const isBcryptHash = entry.data.password.startsWith('$2b$') || entry.data.password.startsWith('$2a$') || entry.data.password.startsWith('$2y$');
+  
+  if (isBcryptHash) {
+    // 通过 new-post.js 生成的 bcrypt 哈希密码
+    // 构建阶段：加密逻辑
+    const passwordHash = entry.data.password;
+    
+    // entry.body 是 Markdown 源内容（含 frontmatter）
+    const body = entry.body;
+    // 使用哈希值作为 AES 加密密钥
+    const encrypted = CryptoJS.AES.encrypt(body, passwordHash).toString();
+    
+    encryptedData = {
+      content: encrypted,
+      hash: passwordHash,
+      isBcryptHash: true
+    };
+  } else {
+    // 明文密码
+    const password = entry.data.password;
+    const passwordHash = bcrypt.hashSync(password, 10);
+    
+    // entry.body 是 Markdown 源内容（含 frontmatter）
+    const body = entry.body;
+    // 使用明文密码作为 AES 加密密钥
+    const encrypted = CryptoJS.AES.encrypt(body, password).toString();
+    
+    encryptedData = {
+      content: encrypted,
+      hash: passwordHash,
+      isBcryptHash: false
+    };
+  }
+}
 
 const jsonLd = {
 	"@context": "https://schema.org",
@@ -104,9 +147,25 @@ const jsonLd = {
             }
 
 
-            <Markdown class="mb-6 markdown-content onload-animation">
-                <Content />
-            </Markdown>
+            <!-- 加密文章的处理 -->
+            {encryptedData ? (
+                <div>
+                    <PasswordProtection encryptedData={encryptedData}
+                      slug={entry.slug}
+                      class="mb-6 rounded-xl password-container onload-animation"
+                    />
+                    <!-- 加密内容容器，内容将通过JavaScript动态解密显示 -->
+                    <div id={`article-content-${entry.slug}`} class="mb-6 markdown-content onload-animation hidden encrypted-content">
+                        <!-- 内容将在验证密码后动态插入 -->
+                    </div>
+                </div>
+            ) : (
+                <div class="mb-6 markdown-content onload-animation">
+                    <Markdown class="w-full">
+                        <Content />
+                    </Markdown>
+                </div>
+            )}
 
             {licenseConfig.enable && <License title={entry.data.title} slug={entry.slug} pubDate={entry.data.published} class="mb-6 rounded-xl license-container onload-animation"></License>}
             <!-- 评论模块 -->
